@@ -148,7 +148,7 @@ public class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterf
     /**
      * <p>Gets called from within the last row ViewHolder instance to indicate user has lift his finger
      * of the backspace button, ACTION_UP</p>
-     * <p>If the backspace-allow state changed between the DOWN & UP event, notify adapter to
+     * <p>If the backspace-allow state changed between the DOWN and UP event, notify adapter to
      * redraw the last row</p>
      * <p>If the pin length was max before the touch DOWN, notify adapter to redraw the all pins
      * to re-enable the user input on numbers</p>
