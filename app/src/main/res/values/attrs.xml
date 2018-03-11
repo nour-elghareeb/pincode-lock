@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PinLockView">
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+    </declare-styleable>
+    <declare-styleable name="PinDotView">
+        <attr name="dotBackground" format="reference"/>
+    </declare-styleable>
+</resources>
