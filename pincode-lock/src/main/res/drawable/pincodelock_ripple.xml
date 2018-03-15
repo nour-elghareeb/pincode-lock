@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/pincodelock_rippleColor"
+    tools:targetApi="lollipop">
+    <item android:state_enabled="true" android:id="@android:id/mask">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+    <item>
+        <selector>
+            <item android:state_enabled="false" android:drawable="@android:color/transparent" /> <!-- default -->
+        </selector>
+    </item>
+</ripple>

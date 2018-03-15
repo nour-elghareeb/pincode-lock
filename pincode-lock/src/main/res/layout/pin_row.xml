@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/left"
+        style="@style/pinNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/center"
+        />
+    <TextView
+        android:id="@+id/center"
+        style="@style/pinNumber"
+        app:layout_constraintStart_toEndOf="@id/left"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        />
+    <TextView
+        android:id="@+id/right"
+        style="@style/pinNumber"
+        app:layout_constraintStart_toEndOf="@id/center"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</android.support.constraint.ConstraintLayout>
