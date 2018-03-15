@@ -136,7 +136,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
 
     @Override
     public void onPinReAttempt() {
-
+        if (listener != null) listener.onPinReAttempt();
     }
 
     public void setPinChangeListener(PinCodeLockListener listener) {
