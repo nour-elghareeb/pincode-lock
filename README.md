@@ -27,7 +27,7 @@ And grap library dependency (Check latest version from my [bintray repository](h
 dependencies {
 	// other dependencies here 
 	
-	compile 'com.ne:pincode-lock:0.1.114'
+	compile 'com.ne:pincode-lock:0.1.117'
 }
 ```
 ## Usage
@@ -62,7 +62,7 @@ Set up your xml:
 </android.support.constraint.ConstraintLayout>
 ```
 
-In your Java code:
+In Java:
 ```java
 // Assign Dots view
 IndicatorDotView dotsView = findViewById(R.id.dotsView);
@@ -119,7 +119,7 @@ To customize library copy these values to its appropriate resources files and up
 ```
 
 ## Known Bugs
-* Fix maintaining/restoring instance when it is destroyed.
+* none
 
 ## Support 
 feel free to contact me for any bugs or suggestions regarding the library
