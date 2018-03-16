@@ -65,6 +65,7 @@ Set up your xml:
 In Java:
 ```java
 // Assign Dots view
+
 IndicatorDotView dotsView = findViewById(R.id.dotsView);
 // Assign PinLockView
 PinLockView pinLockView = findViewById(R.id.pinLockView);
@@ -88,6 +89,7 @@ pinLockView.setPinChangeListener(this);
 ```
 
 Library customization:
+
 To customize library copy these values to its appropriate resources files and update them as you like.
 ```xml
 <!-- colors.xml -->
@@ -119,7 +121,7 @@ To customize library copy these values to its appropriate resources files and up
 ```
 
 ## Known Bugs
-* none
+* maintaining/restoring view instance when activity is destroyed
 
 ## Support 
 feel free to contact me for any bugs or suggestions regarding the library

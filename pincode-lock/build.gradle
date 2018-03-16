@@ -12,7 +12,7 @@ ext {
     siteUrl = 'https://github.com/nour-elghareeb/pincode-lock'
     gitUrl = 'https://github.com/nour-elghareeb/pincode-lock'
 
-    libraryVersion = '0.1.116'
+    libraryVersion = '0.1.117'
 
     developerId = 'Nour Elghareeb'
     developerName = 'Nour Elghareeb'
