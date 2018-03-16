@@ -20,12 +20,12 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
     private DotRecyclerView pinDotRecycler;
     private PinAdapter adapter;
     private int maxLength = 15;
-    private int requiredLength = 4;
+    private int requiredLength = -1;
     private PinCodeLockListener listener;
     private boolean errorAnimated = false;
     private int maxAttemptCount = 5;
     private int attempts;
-    private long freezeDuration = 3000;
+    private long freezeDuration = 30000;
     private int freezeCount;
     private String freezeMsg = "Try again in %s seconds";
     private IndicatorDotView indicatorsContainer;

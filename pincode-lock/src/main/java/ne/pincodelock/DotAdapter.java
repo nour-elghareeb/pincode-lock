@@ -64,12 +64,20 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinCodeL
             models.clear();
             notifyDataSetChanged();
         }
-        else if (models.size() > pin.length()){
-            models.remove(lastPos);
-            notifyItemRemoved(lastPos);
-        }else {
-            models.add(new DotModel(lastPos + 1));
-            notifyItemChanged(lastPos + 1);
+        else if (models.size() - pin.length() == Math.abs(1) ){
+            if (models.size() > pin.length()){
+                models.remove(lastPos);
+                notifyItemRemoved(lastPos);
+            }else {
+                models.add(new DotModel(lastPos + 1));
+                notifyItemChanged(lastPos + 1);
+            }
+        }else{
+            models.clear();
+            for (int i = 0; i < pin.length(); i++){
+                models.add(new DotModel(i));
+            }
+            notifyDataSetChanged();
         }
     }
 
