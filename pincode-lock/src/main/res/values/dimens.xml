@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pincodelock_freeze_msg_textsize">15sp</dimen>
+    <dimen name="pincodelock_pin_textsize">25sp</dimen>
+</resources>
