@@ -5,13 +5,26 @@
     android:layout_height="wrap_content"
 
     >
-
+    <TextView
+        android:id="@+id/dotMsgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/dotRecycler"
+        app:layout_constraintBottom_toBottomOf="@id/dotRecycler"
+        app:layout_constraintTop_toTopOf="@id/dotRecycler"
+        app:layout_constraintEnd_toEndOf="@id/dotRecycler"
+        android:textColor="@color/pincodelock_freeze_msg_color"
+        android:textSize="@dimen/pincodelock_freeze_msg_textsize"
+        android:visibility="gone"
+        />
     <ne.pincodelock.DotRecyclerView
         android:id="@+id/dotRecycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_centerVertical="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         />
 </merge>

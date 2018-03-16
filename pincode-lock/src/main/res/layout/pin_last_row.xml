@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
-    android:orientation="horizontal"
 
-    android:gravity="end">
-    <View
+    android:orientation="horizontal"
+    >
+    <TextView
         android:id="@+id/left"
-        style="@style/pinStyle"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/center"
         />
     <TextView
         android:id="@+id/center"
-        style="@style/pinNumber"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toEndOf="@id/left"
         app:layout_constraintEnd_toStartOf="@id/rightLayout"
 
         />
     <LinearLayout
         android:id="@+id/rightLayout"
-        style="@style/pinStyle"
+        style="@style/pincodelock_pinStyle"
         app:layout_constraintStart_toEndOf="@id/center"
         app:layout_constraintEnd_toEndOf="parent"
+
         android:clickable="true"
         android:focusable="true"
         >
         <ImageView
             android:id="@+id/right"
             android:contentDescription="@string/_backsapce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/pincodelock_pin_textsize"
+            android:layout_height="@dimen/pincodelock_pin_textsize"
             android:gravity="center"
-
             android:src="@drawable/backspace" />
     </LinearLayout>
 

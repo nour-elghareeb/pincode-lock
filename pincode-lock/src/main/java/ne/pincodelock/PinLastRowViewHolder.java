@@ -23,7 +23,6 @@ class PinLastRowViewHolder extends PinRowViewHolder {
         super(itemView, callback);
         right = itemView.findViewById(R.id.right);
         rightLayout = itemView.findViewById(R.id.rightLayout);
-        callback.apply(right);
         right.setColorFilter(ContextCompat.getColor(callback.getContext(), R.color.pincodelock_text_color), PorterDuff.Mode.SRC_IN);
 
     }
@@ -47,6 +46,7 @@ class PinLastRowViewHolder extends PinRowViewHolder {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // if user touches the backspace
+                if (!callback.isClickable()) return false;
                 if (event.getAction() == MotionEvent.ACTION_DOWN){
                     maxDiff = 200;
                     // send a flag to the adapter (user started touch)
@@ -64,6 +64,7 @@ class PinLastRowViewHolder extends PinRowViewHolder {
                     if (diff > maxDiff){
                         downOnBackSpaceSince = System.currentTimeMillis();
                         if (callback.isBackspaceAllowed()) callback.onBackspaceAction();
+                        // decrease difference limit between each firing each time
                         if (maxDiff == 200) maxDiff = 150;
                         else if (maxDiff == 150) maxDiff = 100;
                         else if (maxDiff == 100) maxDiff = 50;

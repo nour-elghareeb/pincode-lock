@@ -22,8 +22,8 @@ class PinRowViewHolder extends RecyclerView.ViewHolder {
         @Override
         public void onClick(View v) {
             // if pin code hasn't reach maximum, pass the number pressed to the adapter
-            //if (!callback.hasReachedMaxLength())
-            callback.onNumberAction(((TextView) v).getText().toString() );
+            if (callback.isClickable())
+                callback.onNumberAction(((TextView) v).getText().toString() );
         }
     };
     /**
@@ -44,7 +44,6 @@ class PinRowViewHolder extends RecyclerView.ViewHolder {
         center = itemView.findViewById(R.id.center);
 
         this.callback = callback;
-        callback.apply(left, center, right);
     }
 
     /**
@@ -61,10 +60,5 @@ class PinRowViewHolder extends RecyclerView.ViewHolder {
         right.setOnClickListener(clickListener);
         center.setOnClickListener(clickListener);
         left.setOnClickListener(clickListener);
-
-        // set enabled/disabled state based upon the pin number reaching its max length.
-//        left.setEnabled(!callback.hasReachedMaxLength());
-//        right.setEnabled(!callback.hasReachedMaxLength());
-//        center.setEnabled(!callback.hasReachedMaxLength());
     }
 }

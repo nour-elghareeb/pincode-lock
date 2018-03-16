@@ -3,22 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="horizontal">
     <TextView
         android:id="@+id/left"
-        style="@style/pinNumber"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/center"
+
         />
     <TextView
         android:id="@+id/center"
-        style="@style/pinNumber"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toEndOf="@id/left"
         app:layout_constraintEnd_toStartOf="@id/right"
         />
     <TextView
         android:id="@+id/right"
-        style="@style/pinNumber"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toEndOf="@id/center"
         app:layout_constraintEnd_toEndOf="parent"
         />

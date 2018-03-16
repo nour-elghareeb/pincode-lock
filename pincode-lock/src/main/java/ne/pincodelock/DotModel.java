@@ -5,19 +5,10 @@ package ne.pincodelock;
  */
 
 class DotModel {
-    private int position;
-    private boolean enabled = true;
+    private final int position;
 
     DotModel(int position) {
         this.position = position;
-    }
-
-    boolean isEnabled() {
-        return enabled;
-    }
-
-    void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public int getPosition() {

@@ -1,21 +1,16 @@
 package ne.pincodelock;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * An adapter for the PinLockView recycler
  */
 
-class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, ApplyAttrInterface {
+class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     // A string representation for logging
     private static final String TAG = PinAdapter.class.getSimpleName();
     // A list that holds Pin rows
@@ -24,12 +19,13 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, Ap
     private int maxLength;
     // String builder for the pincode
     private StringBuilder pin;
-    private boolean wasMaximumLengthBeforeTouchDown = false;
     // Array that holds xml attributes.
-    private SparseArray<Object> attrValues;
     private Context context;
-    private int requiredLength;
+    // backspace counter to detect attempts
     private int consecutiveBackspace;
+    private int maxConsecutiveBackspace = 2;
+    private boolean clickable = true;
+
 
     /**
      * <p>A constructor for the pin adapter</p>
@@ -144,7 +140,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, Ap
             pin.deleteCharAt(pin.length() - 1);
             // notify outside listener that pin code changed
             listener.onPinChange(pin.toString());
-            if (consecutiveBackspace == 2) listener.onPinReAttempt();
+            if (consecutiveBackspace == maxConsecutiveBackspace) listener.onPinReAttempt(false);
         }
     }
 
@@ -167,7 +163,6 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, Ap
      */
     @Override
     public void onBackspaceDown() {
-        wasMaximumLengthBeforeTouchDown = hasReachedMaxLength();
     }
 
     /**
@@ -188,70 +183,9 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, Ap
         return pin.length() > 0;
     }
 
-
-    /**
-     * Sets the attrs array that holds xml attributes, Called by the Recycler view.
-     * @param attrValues xml attributes,
-     */
-    void setAttrValues(SparseArray<Object> attrValues) {
-        this.attrValues = attrValues;
-    }
-
-    /**
-     * Gets called from within the VierHolder to apply passed xml attributes on the views' inputs
-     * @param views an Array of the ViewHolder children inputs.
-     */
     @Override
-    public void apply(View... views) {
-        // make sure the Recycler has set the attributes
-        if (attrValues != null) {
-            // loop over the indices of the attribute array
-            for (int i = 0; i < attrValues.size(); i++) {
-                //get The key
-                int key = attrValues.keyAt(i);
-                // get the object by the key.
-                Object obj = attrValues.get(key);
-                // if key is textSize
-                if(key == R.styleable.PinLockView_android_textSize){
-                    // loop over passed views
-                    for (View view: views)
-                        try {
-                            //Try cast the view as TextView and set the textSize
-                            ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, (Float) obj);
-                        }catch (NullPointerException ignored){}
-                        catch (ClassCastException e){
-                            // if the view isn't a TextView, then it is the backspace Image
-                            // set the layoutparams of Linearlayout parent of the image to reflect
-                            // about the same effect as the textView textSize.
-                            try {
-                                ImageView imageView = (ImageView) view;
-                                imageView.getLayoutParams().height = (int) Math.round(((Float) obj) * 2.5);
-                                imageView.requestLayout();
-                            }catch (Exception ignored){}
-                        }
-                    break;
-                }
-                // TextColor attribute
-                else if (key == R.styleable.PinLockView_android_textColor){
-                    // Loop over the views
-                    for (View view: views)
-                        // try casting to TextView and set textColor
-                        try {
-                            ((TextView) view).setTextColor((Integer) obj);
-                        }
-                        // if casting failed, then cast to an ImageView and setColorFilter.
-                        catch (NullPointerException ignored){}
-                        catch (Exception e){
-                            try {
-                                ImageView imageView = (ImageView) view;
-                                ((ImageView) view).setColorFilter(R.color.pincodelock_pin_color, PorterDuff.Mode.SRC_IN);
-                                imageView.requestLayout();
-                            }catch (Exception ignored){}
-                        }
-                    break;
-                }
-            }
-        }
+    public boolean isClickable() {
+        return clickable;
     }
 
     /**
@@ -285,4 +219,11 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface, Ap
     }
 
 
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
+    }
+
+    public void setMaxConsecutiveBackspace(int maxConsecutiveBackspace) {
+        this.maxConsecutiveBackspace = maxConsecutiveBackspace;
+    }
 }

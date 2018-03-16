@@ -2,8 +2,6 @@ package ne.pincodelock;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,35 +12,30 @@ import java.util.ArrayList;
  * Adapter for PinDotView the recycler
  */
 
-class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinCodeLockListener, ApplyAttrInterface{
+class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinCodeLockListener{
     //tag for logging
     private static final String TAG = DotAdapter.class.getSimpleName();
     // Arraylist to hold the dot models
     private ArrayList<DotModel> models;
     // SparseArray that holds the attrs values passed from the xml, used to update ViewHolder inputs.
-    private SparseArray<Object> attrValues;
     private Context context;
 
     // Basic constructor that initiate the models array
     DotAdapter(Context context){
         models = new ArrayList<>();
         this.context = context;
-        //setMaxLength(4);
     }
-
-
     @Override
     public DotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a view for the view holder.
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         // Return a ViewHolder instance for the DotView Recycler.
-        return new DotViewHolder(view, this);
+        return new DotViewHolder(view, getContext());
     }
 
     @Override
     public void onBindViewHolder(DotViewHolder holder, int position) {
-        // Fetch the dot model from the list based on the position and passes it to the ViewHolder
-        holder.bind(models.get(position));
+        // animate dot during showing up.
         if (position == models.size() - 1 ){
             holder.animate();
         }
@@ -81,46 +74,28 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinCodeL
     }
 
     @Override
-    public void onPinReachRequired(String pin) {
+    public void onPinReachRequiredLength(String pin) {
 
     }
 
     @Override
-    public void onPinReachMax(String pin) {
-
+    public boolean onPinReachMaxLength(String pin) {
+        return false;
     }
 
     @Override
-    public void onPinReAttempt() {
-
-    }
-
-    /**
-     * set the attr set passed with xml.
-     * @param attrValues attrs set values.
-     */
-    void setAttrValues(SparseArray<Object> attrValues) {
-        this.attrValues = attrValues;
+    public boolean onPinReAttempt(boolean fromClear) {
+        return false;
     }
 
     @Override
-    public void apply(View... views) {
-        if (attrValues != null) {
-            for (int i = 0; i < attrValues.size(); i++) {
-                int key = attrValues.keyAt(i);
-                // get the object by the key.
-                Object obj = attrValues.get(key);
-                if (key ==  R.styleable.DotRecyclerView_dotBackground){
-                    for (View view : views){
-                        view.setBackgroundResource((Integer) obj);
-                    }
-                }
-            }
-        }
+    public boolean onPinAttemptReachLimit(int attemptLimitReachedCount) {
+        return false;
     }
 
-    public int getMaxLength() {
-        return models.size();
+    @Override
+    public void onPinFreezeStateChanged(boolean isEnabled) {
+
     }
 
     public Context getContext() {
