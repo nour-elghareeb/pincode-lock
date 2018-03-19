@@ -12,7 +12,7 @@ ext {
     siteUrl = 'https://github.com/nour-elghareeb/pincode-lock'
     gitUrl = 'https://github.com/nour-elghareeb/pincode-lock'
 
-    libraryVersion = '0.1.117'
+    libraryVersion = '0.1.120'
 
     developerId = 'Nour Elghareeb'
     developerName = 'Nour Elghareeb'
@@ -48,7 +48,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.android.support:recyclerview-v7:26.1.0"
     testImplementation 'junit:junit:4.12'
-    javadocDeps 'com.android.support:support-annotations:27.1.0'
+    javadocDeps 'com.android.support:support-annotations:26.1.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 

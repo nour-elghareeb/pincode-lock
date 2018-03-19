@@ -2,4 +2,9 @@
 <resources>
     <dimen name="pincodelock_freeze_msg_textsize">15sp</dimen>
     <dimen name="pincodelock_pin_textsize">25sp</dimen>
+    <dimen name="pincodelock_pinRow_minHeight">60dp</dimen>
+    <dimen name="pincodelock_pinRow_maxHeight">80dp</dimen>
+    <dimen name="pincodelock_pinRow_marginHorizontal">25dp</dimen>
+    <dimen name="pincodelock_pin_padding">15dp</dimen>
+    <dimen name="pincodelock_pinRow_marginVertical">10dp</dimen>
 </resources>

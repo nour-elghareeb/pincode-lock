@@ -9,14 +9,10 @@
     <style name="pincodelock_pinStyle">
         <item name="layout_constraintTop_toTopOf">parent</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintHorizontal_chainStyle">spread</item>
-
+        <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:minWidth">60dp</item>
-        <item name="android:minHeight">60dp</item>
-        <item name="android:maxWidth">100dp</item>
-        <item name="android:maxHeight">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/pincodelock_pin_padding</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/pincodelock_ripple_effect</item>
         <item name="layout_constraintDimensionRatio">1:1</item>
@@ -27,4 +23,10 @@
         <item name="android:textColor">@color/pincodelock_text_color</item>
     </style>
 
+    <style name="pinRowStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/pincodelock_pinRow_marginVertical</item>
+        <item name="android:layout_marginBottom">@dimen/pincodelock_pinRow_marginVertical</item>
+    </style>
 </resources>

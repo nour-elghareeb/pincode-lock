@@ -15,13 +15,13 @@ import android.widget.TextView;
  * PinLock RecycleView
  */
 
-public class PinLockView extends RecyclerView implements PinCodeLockListener {
+public class PinLockView extends RecyclerView implements PinLockListener {
     private static final String TAG = PinLockView.class.getSimpleName();
     private DotRecyclerView pinDotRecycler;
     private PinAdapter adapter;
     private int maxLength = 15;
     private int requiredLength = -1;
-    private PinCodeLockListener listener;
+    private PinLockListener listener;
     private boolean errorAnimated = false;
     private int maxAttemptCount = 5;
     private int attempts;
@@ -31,7 +31,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
     private IndicatorDotView indicatorsContainer;
     private TextView pinDotMsgView;
     private boolean isFrozen;
-
+    private boolean countDownInProgress = false;
 
     public PinLockView(Context context) {
         super(context);
@@ -61,7 +61,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
         adapter.setListener(this);
         adapter.setMaxLength(maxLength);
         setAdapter(adapter);
-
+        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
     @Override
@@ -145,12 +145,14 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
     @Override
     public boolean onPinAttemptReachLimit(int attemptLimitReachedCount) {
         attempts = 0;
+
         if (listener != null){
             if (!listener.onPinAttemptReachLimit(attemptLimitReachedCount)){
                 clear(true);
                 adapter.setClickable(false);
                 onPinFreezeStateChanged(false);
                 pinDotMsgView.setVisibility(VISIBLE);
+                countDownInProgress = true;
                 new CountDownTimer(freezeDuration + 1000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         pinDotMsgView.setText(String.format(freezeMsg, millisUntilFinished/1000));
@@ -161,6 +163,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
                         pinDotMsgView.setVisibility(GONE);
                         adapter.setClickable(true);
                         onPinFreezeStateChanged(true);
+                        countDownInProgress = false;
 
                     }
                 }.start();
@@ -185,7 +188,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
         this.freezeDuration = freezeSeconds * 1000L;
     }
 
-    public void setPinChangeListener(PinCodeLockListener listener) {
+    public void setPinChangeListener(PinLockListener listener) {
         this.listener = listener;
     }
 
@@ -210,7 +213,7 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
     }
 
     /**
-     * Set max invalid attempts before calling {@link PinCodeLockListener#onPinAttemptReachLimit(int)}
+     * Set max invalid attempts before calling {@link PinLockListener#onPinAttemptReachLimit(int)}
      * @param maxAttemptCount integer: max number of attempts allowed
      */
     public void setMaxNumberOfAttempts(int maxAttemptCount){
@@ -241,7 +244,8 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     transition.reverseTransition(400);
-                    adapter.setClickable(true);
+                    if (!countDownInProgress)
+                        adapter.setClickable(true);
                 }
 
                 @Override
@@ -255,9 +259,9 @@ public class PinLockView extends RecyclerView implements PinCodeLockListener {
 
     /**
      * <p>set actual user pin code length to get a callback when pin reaches that length through
-     * {@link PinCodeLockListener#onPinReachRequiredLength(String)}</p>
+     * {@link PinLockListener#onPinReachRequiredLength(String)}</p>
      * <p>If unspecified, you should either create a button for the user to verify pin or
-     * verify pin each time {@link PinCodeLockListener#onPinChange(String)} gets called</p>
+     * verify pin each time {@link PinLockListener#onPinChange(String)} gets called</p>
      *
      * @param requiredLength actual pin code length
      */

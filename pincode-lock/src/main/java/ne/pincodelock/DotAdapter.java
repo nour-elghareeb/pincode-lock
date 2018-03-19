@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Adapter for PinDotView the recycler
  */
 
-class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinCodeLockListener{
+class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockListener {
     //tag for logging
     private static final String TAG = DotAdapter.class.getSimpleName();
     // Arraylist to hold the dot models

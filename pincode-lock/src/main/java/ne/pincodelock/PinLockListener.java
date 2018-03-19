@@ -5,7 +5,7 @@ package ne.pincodelock;
  * number
  */
 
-public interface PinCodeLockListener {
+public interface PinLockListener {
     /**
      * Called when a pin length change occur
      * @param pin String: current pin

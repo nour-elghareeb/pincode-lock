@@ -54,7 +54,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     /**
      * A pin code listener that reports back to the view..
      */
-    private PinCodeLockListener listener;
+    private PinLockListener listener;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate the view based on the view type
@@ -100,9 +100,9 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
 
     /**
      * Setter for the outside listener
-     * @param listener Any class that implements PinCodeLockListener
+     * @param listener Any class that implements PinLockListener
      */
-    void setListener(PinCodeLockListener listener) {
+    void setListener(PinLockListener listener) {
         this.listener = listener;
     }
 
