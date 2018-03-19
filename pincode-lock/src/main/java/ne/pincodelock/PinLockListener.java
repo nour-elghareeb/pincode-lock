@@ -34,9 +34,10 @@ public interface PinLockListener {
      * pre-set max limit of consecutive touches</p>
      * @param fromClear true when the attempt was caused by max-length clear, false when a
      *                  consecutive backspace limit was reached
+     * @param attemptNumber current number of attempts
      * @return false to start default error animation, true to consume event in the listener
      */
-    boolean onPinReAttempt(boolean fromClear);
+    boolean onPinReAttempt(boolean fromClear, int attemptNumber);
 
     /**
      * Called when user reach the pre-set limit of attempts. Default is 30 seconds

@@ -120,22 +120,23 @@ public class PinLockView extends RecyclerView implements PinLockListener {
             if (!listener.onPinReachMaxLength(pin)){
                 clear(true);
                 errorAnimated = true;
-                onPinReAttempt(true);
+                onPinReAttempt(true, -1);
             }
         }
         return false;
     }
 
     @Override
-    public boolean onPinReAttempt(boolean fromClear) {
+    public boolean onPinReAttempt(boolean fromClear, int attemptNumber) {
         attempts++;
         if (attempts > maxAttemptCount){
             freezeCount++;
             onPinAttemptReachLimit(freezeCount);
             return false;
         }
+
         if (listener != null) {
-            if (!listener.onPinReAttempt(fromClear)){
+            if (!listener.onPinReAttempt(fromClear, attempts)){
                 if (!errorAnimated) showErrorAnimation();
             }
         }

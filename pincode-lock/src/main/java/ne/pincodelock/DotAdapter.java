@@ -92,7 +92,7 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockL
     }
 
     @Override
-    public boolean onPinReAttempt(boolean fromClear) {
+    public boolean onPinReAttempt(boolean fromClear, int attemptNumber) {
         return false;
     }
 

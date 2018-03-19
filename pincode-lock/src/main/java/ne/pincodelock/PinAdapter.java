@@ -59,7 +59,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate the view based on the view type
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        // if the viewtype was a generic row
+        // if the viewtype was aint attemptNumber generic row
         if (viewType == R.layout.pin_row)
             return new PinRowViewHolder(view, this);
         // if the type was last row
@@ -140,7 +140,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
             pin.deleteCharAt(pin.length() - 1);
             // notify outside listener that pin code changed
             listener.onPinChange(pin.toString());
-            if (consecutiveBackspace == maxConsecutiveBackspace) listener.onPinReAttempt(false);
+            if (consecutiveBackspace == maxConsecutiveBackspace) listener.onPinReAttempt(false, -1);
         }
     }
 
