@@ -14,6 +14,9 @@ Provides a pin code lock screen for android apps
     - Setting a message to show the user when they run out of attempts.
     - Setting the max consecutive backspace touches to mark as an attempt.
     - Customize size of view, text size, text color, dot background color, dot container border and backgrouynd color.
+ 
+ ![Library screen view](https://github.com/nour-elghareeb/pincode-lock/blob/master/library_screen.gif?raw=true)
+
 ## Download
 To download the library, include this repository:
 ```gradle
