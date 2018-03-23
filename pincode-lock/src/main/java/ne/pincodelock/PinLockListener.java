@@ -15,7 +15,7 @@ public interface PinLockListener {
     /**
      * Called when pin code reaches pre-set required length to apply custom pin-verification
      * @param pin String: current pin
-     * @see  PinLockView#setRequiredLength(int)
+     * @see  PinLockRecycler#setRequiredLength(int)
      */
     void onPinReachRequiredLength(String pin);
 
@@ -25,7 +25,7 @@ public interface PinLockListener {
      * @param pin String: current pin
      * @return false to clear pin and start default error animation,
      * True to consume event in the listener
-     * @see PinLockView#setMaxLength(int)
+     * @see PinLockRecycler#setMaxLength(int)
      */
     boolean onPinReachMaxLength(String pin);
     /**
@@ -43,7 +43,7 @@ public interface PinLockListener {
      * Called when user reach the pre-set limit of attempts. Default is 30 seconds
      * @param attemptLimitReachedCount the number of times user reached limit.
      * @return false to disable input for the pre-set freeze duration.
-     * @see PinLockView#setFreezeDuration(int)
+     * @see PinLockRecycler#setFreezeDuration(int)
      */
     boolean onPinAttemptReachLimit(int attemptLimitReachedCount);
 

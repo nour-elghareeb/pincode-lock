@@ -10,7 +10,9 @@
     <color name="pincodelock_dotContainer_background">#FCFCFC</color>
     <color name="pincodelock_dot_color">#666666</color>
     <color name="pincodelock_dotContainer_border_error">#C00000</color>
+    <color name="pincodelock_dotContainer_border_success">#00A000</color>
     <color name="pincodelock_dotContainer_background_error">#FFFFFF</color>
+    <color name="pincodelock_dotContainer_background_success">#FFFFFF</color>
     <color name="pincodeLock_pin_background_enabled">#FFFFFFFF</color>
     <color name="pincodeLock_pin_background_disabled">#AADDDDDD</color>
     <color name="pincodelock_freeze_msg_color">#666666</color>

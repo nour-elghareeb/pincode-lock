@@ -1,72 +1,46 @@
 package ne.pincodelock;
 
 import android.content.Context;
-import android.graphics.drawable.TransitionDrawable;
-import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 
 /**
- * PinLock RecycleView
+ * ConstraintLayout container for the PinLockRecycler. Have a z-index view that blocks input whenever
+ * Input is set to disabled.
  */
 
-public class PinLockView extends RecyclerView implements PinLockListener {
+public class PinLockView extends ConstraintLayout implements PinLockClickableUpdate {
     private static final String TAG = PinLockView.class.getSimpleName();
-    private DotRecyclerView pinDotRecycler;
-    private PinAdapter adapter;
-    private int maxLength = 15;
-    private int requiredLength = -1;
-    private PinLockListener listener;
-    private boolean errorAnimated = false;
-    private int maxAttemptCount = 5;
-    private int attempts;
-    private long freezeDuration = 30000;
-    private int freezeCount;
-    private String freezeMsg = "Try again in %s seconds";
-    private IndicatorDotView indicatorsContainer;
-    private TextView pinDotMsgView;
-    private boolean isFrozen;
-    private boolean countDownInProgress = false;
-
+    private PinLockRecycler pinLockRecycler;
+    private View zIndexView;
     public PinLockView(Context context) {
         super(context);
         init();
-        onFinishInflate();
     }
-    public PinLockView(Context context, @Nullable AttributeSet attrs) {
+
+    public PinLockView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PinLockView(Context context, @Nullable AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public PinLockView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init();
     }
-
-
-
-    /**
-     * initialize component, gets called right after constructor.
-     */
-    private void init() {
-        adapter = new PinAdapter(getContext());
-        adapter.setMaxLength(maxLength);
-        setLayoutManager(new LinearLayoutManager(getContext()));
-        setHasFixedSize(true);
-        adapter.setListener(this);
-        adapter.setMaxLength(maxLength);
-        setAdapter(adapter);
-        setOverScrollMode(OVER_SCROLL_NEVER);
+    private void init(){
+        LayoutInflater.from(getContext()).inflate(R.layout.pin_lock_view, this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        pinLockRecycler = findViewById(R.id.pinLockRecycler);
+        pinLockRecycler.setClickableListener(this);
+        zIndexView = findViewById(R.id.zIndexView);
+
     }
 
     /**
@@ -75,122 +49,11 @@ public class PinLockView extends RecyclerView implements PinLockListener {
      */
     public void attachPinDotView(IndicatorDotView pinDotView) {
         // sets the pinDotRecycler instance
-        this.indicatorsContainer = pinDotView;
-        this.pinDotRecycler = pinDotView.getRecycler();
-        this.pinDotMsgView = pinDotView.getDotMsgView();
-    }
-
-    /**
-     * Set maximum length the view can reach
-     * @param maxLength int: max possible Length of a pin code
-     */
-    public void setMaxLength(int maxLength) {
-        this.maxLength = maxLength;
-        // notify adapter about the max length change
-        adapter.setMaxLength(maxLength);
-    }
-
-    /**
-     * An interface that connects the PinAdapter with the view to notify the view about pin change
-     * @param pin String : current pin code
-     */
-    @Override
-    public void onPinChange(String pin) {
-        // if a DotView is attached, notify the pin change
-        errorAnimated = false;
-        if (pinDotRecycler != null){
-            pinDotRecycler.getAdapter().onPinChange(pin);
-        }
-        // if an external listener is attached, notify the pin change
-        if (listener != null){
-            listener.onPinChange(pin);
-            if (requiredLength != 0 && pin.length() == requiredLength) listener.onPinReachRequiredLength(pin);
-            if (adapter.hasReachedMaxLength()) onPinReachMaxLength(pin);
-        }
-    }
-
-    @Override
-    public void onPinReachRequiredLength(String pin) {
-
-    }
-
-    @Override
-    public boolean onPinReachMaxLength(String pin) {
-        if(listener != null){
-            if (!listener.onPinReachMaxLength(pin)){
-                clear(true);
-                errorAnimated = true;
-                onPinReAttempt(true, -1);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onPinReAttempt(boolean fromClear, int attemptNumber) {
-        attempts++;
-        if (attempts > maxAttemptCount){
-            freezeCount++;
-            onPinAttemptReachLimit(freezeCount);
-            return false;
-        }
-
-        if (listener != null) {
-            if (!listener.onPinReAttempt(fromClear, attempts)){
-                if (!errorAnimated) showErrorAnimation();
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onPinAttemptReachLimit(int attemptLimitReachedCount) {
-        attempts = 0;
-
-        if (listener != null){
-            if (!listener.onPinAttemptReachLimit(attemptLimitReachedCount)){
-                clear(true);
-                adapter.setClickable(false);
-                onPinFreezeStateChanged(false);
-                pinDotMsgView.setVisibility(VISIBLE);
-                countDownInProgress = true;
-                new CountDownTimer(freezeDuration + 1000, 1000) {
-                    public void onTick(long millisUntilFinished) {
-                        pinDotMsgView.setText(String.format(freezeMsg, millisUntilFinished/1000));
-                    }
-
-                    public void onFinish() {
-                        pinDotMsgView.setText("");
-                        pinDotMsgView.setVisibility(GONE);
-                        adapter.setClickable(true);
-                        onPinFreezeStateChanged(true);
-                        countDownInProgress = false;
-
-                    }
-                }.start();
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void onPinFreezeStateChanged(boolean isEnabled) {
-        isFrozen = !isEnabled;
-        if (listener != null){
-            listener.onPinFreezeStateChanged(isEnabled);
-        }
-    }
-
-    /**
-     * Set a duration to freeze (disable) input when user run out of attempts.
-     * @param freezeSeconds number of seconds to disable input for.
-     */
-    public void setFreezeDuration(int freezeSeconds){
-        this.freezeDuration = freezeSeconds * 1000L;
+        pinLockRecycler.attachPinDotView(pinDotView);
     }
 
     public void setPinChangeListener(PinLockListener listener) {
-        this.listener = listener;
+        pinLockRecycler.setPinChangeListener(listener);
     }
 
     /**
@@ -198,7 +61,7 @@ public class PinLockView extends RecyclerView implements PinLockListener {
      * @param pin string : pin value
      */
     public void setPin(String pin){
-        adapter.setPin(pin);
+        pinLockRecycler.setPin(pin);
     }
 
     /**
@@ -207,57 +70,46 @@ public class PinLockView extends RecyclerView implements PinLockListener {
      * @param showErrorAnimation boolean: if true, display default incorrect-error-animation
      */
     public void clear(boolean showErrorAnimation){
-        adapter.clearPin();
-        if (showErrorAnimation){
-            showErrorAnimation();
-        }
+        pinLockRecycler.clear(showErrorAnimation);
     }
+
 
     /**
      * Set max invalid attempts before calling {@link PinLockListener#onPinAttemptReachLimit(int)}
      * @param maxAttemptCount integer: max number of attempts allowed
      */
     public void setMaxNumberOfAttempts(int maxAttemptCount){
-        this.maxAttemptCount = maxAttemptCount;
+        pinLockRecycler.setMaxNumberOfAttempts(maxAttemptCount);
     }
 
+    /**
+     * Clear dotsView highlight color (error/success)
+     */
+    public void clearHighlight(){
+        pinLockRecycler.clearHighlight();
+    }
     /**
      * Set the max number of consecutive backspace to consider an attempt.
      * <p>Set to -1 to disable feature.</p>
      * @param count consecutive backspace count. Default is 2
      */
     public void setMaxConsecutiveBackspaceForAnAttempt(int count){
-        adapter.setMaxConsecutiveBackspace(count);
+        pinLockRecycler.setMaxConsecutiveBackspaceForAnAttempt(count);
+    }
+    public void showSuccessAnimation(){
+        pinLockRecycler.showSuccessAnimation();
     }
     public void showErrorAnimation(){
-        if (pinDotRecycler != null){
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
-            final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.dot_container_hightlight);
-            ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(transition);
-
-            anim.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    adapter.setClickable(false);
-                    transition.startTransition(400);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    transition.reverseTransition(400);
-                    if (!countDownInProgress)
-                        adapter.setClickable(true);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            ((IndicatorDotView) pinDotRecycler.getParent()).startAnimation(anim);
-        }
+        pinLockRecycler.showErrorAnimation();
     }
 
+    /**
+     * Set maximum length the view can reach
+     * @param maxLength int: max possible Length of a pin code
+     */
+    public void setMaxLength(int maxLength) {
+        pinLockRecycler.setMaxLength(maxLength);
+    }
     /**
      * <p>set actual user pin code length to get a callback when pin reaches that length through
      * {@link PinLockListener#onPinReachRequiredLength(String)}</p>
@@ -267,9 +119,16 @@ public class PinLockView extends RecyclerView implements PinLockListener {
      * @param requiredLength actual pin code length
      */
     public void setRequiredLength(int requiredLength) {
-        this.requiredLength = requiredLength;
+        pinLockRecycler.setRequiredLength(requiredLength);
     }
 
+    /**
+     * Set a duration to freeze (disable) input when user run out of attempts.
+     * @param freezeSeconds number of seconds to disable input for.
+     */
+    public void setFreezeDuration(int freezeSeconds){
+        pinLockRecycler.setFreezeDuration(freezeSeconds);
+    }
     /**
      * Change the default freeze input message.
      * @param freezeMsg String: message to display to the user when attempts run out.
@@ -277,6 +136,36 @@ public class PinLockView extends RecyclerView implements PinLockListener {
      *                  message
      */
     public void setFreezeMsg(String freezeMsg) {
-        this.freezeMsg = freezeMsg;
+
+        pinLockRecycler.setFreezeMsg(freezeMsg);
+    }
+
+    /**
+     * set layout buttons clickable
+     * @param isClickable true if clickable, false otherwise
+     */
+    @Override
+    public void setClickable(boolean isClickable){
+        super.setClickable(isClickable);
+        zIndexView.setVisibility(isClickable ? GONE : VISIBLE);
+    }
+    /**
+     * Set the over-scroll mode for this view. Valid over-scroll modes are
+     * {@link View#OVER_SCROLL_ALWAYS} (default), {@link View#OVER_SCROLL_IF_CONTENT_SCROLLS}
+     * (allow over-scrolling only if the view content is larger than the container),
+     * or {@link View#OVER_SCROLL_NEVER}.
+     *
+     * Setting the over-scroll mode of a view will have an effect only if the
+     * view is capable of scrolling.
+     *
+     * @param overScrollMode The new over-scroll mode for this view.
+     */
+    public void setOverScrollMode(int overScrollMode){
+//        pinLockRecycler.setOverScrollMode(overScrollMode);
+    }
+
+    @Override
+    public void isClickableUpdated(boolean isClickable) {
+        setClickable(isClickable);
     }
 }

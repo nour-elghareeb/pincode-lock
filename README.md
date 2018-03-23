@@ -4,6 +4,7 @@ Provides a pin code lock screen for android apps
 ## Features:
   * Customizable colors, backgrounds, sizes, etc...
   * Auto error handling animation.
+  * Success animation highlight
   * Auto freeze input when maximum number of attempts is reached
   * Dot-view indicator
   * Customizations:    
@@ -33,7 +34,7 @@ dependencies {
 	
 	//recyclerview dependency
 	implementation "com.android.support:recyclerview-v7:26.1.0"
-	compile 'com.ne:pincode-lock:0.1.120'
+	compile 'com.ne:pincode-lock:0.1.124'
 }
 ```
 ## Usage
@@ -180,11 +181,15 @@ To customize library copy these values to its appropriate resources files and up
     <color name="pincodelock_dotContainer_border_error">#C00000</color>
     <!-- dots view container background color when animation error occurr -->
     <color name="pincodelock_dotContainer_background_error">#FFFFFF</color>
+    <!-- dots view container border color when animation error occurr -->
+    <color name="pincodelock_dotContainer_border_success">#00A000</color>
+    <!-- dots view container background color when animation success occur -->
+    <color name="pincodelock_dotContainer_background_success">#FFFFFF</color>
     <!-- actual dot color -->
     <color name="pincodelock_dot_color">#666666</color>
     <!-- message shown when the layout is frozen text color color -->
     <color name="pincodelock_freeze_msg_color">#666666</color>
-    
+       
     
     <!-- dimens.xml -->
     
