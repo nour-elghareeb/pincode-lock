@@ -44,6 +44,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
     private int extraTintId;
     private int indicatorsViewId;
     private TypedArray attrArray;
+    private boolean isRestored = false;
 
     public PinLockView(Context context) {
         super(context);
@@ -82,6 +83,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         pinLockRecycler.setInternalListener(this);
     }
 
+
     /**
      * Detects listener if it was implemented by the parent fragment/activity context..
      */
@@ -100,7 +102,8 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         super.onAttachedToWindow();
         detectListener();
         detectIndicatorView();
-        applyAttrs();
+        if (!isRestored)
+            applyAttrs();
     }
 
     /**
@@ -314,6 +317,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
             pinLockRecycler.setOverScrollMode(overScrollMode);
     }
     public void onExtraPinClick(){
+
         if (pinLockRecycler.onExtraPinClick(null, null, null)) return;
         switch(pinLockRecycler.getMode()){
             case CONFIRM: case CONFIRMED:
@@ -439,6 +443,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        isRestored = true;
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle)state;
             super.onRestoreInstanceState(bundle.getParcelable(STATE_SUPER_PARCELABLE));
@@ -464,5 +469,8 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         bundle.putInt(STATE_EXTRA_RESOURCE_ID, extraResourceId);
         bundle.putInt(STATE_INDICATORS_VIEW, indicatorsViewId);
         return bundle;
+    }
+    public PinLockMode getMode(){
+        return pinLockRecycler.getMode();
     }
 }

@@ -11,6 +11,7 @@ import android.support.annotation.UiThread;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -437,9 +438,6 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     private static final String STATE_FREEZE_DURATION = "state_freeze_duration";
     private static final String STATE_FREEZE_COUNT = "state_freeze_count";
     private static final String STATE_FREEZE_MSG = "state_freeze_msg";
-    private static final String STATE_EXTRA_IS_VISIBLE = "state_extra_visibility";
-    private static final String STATE_EXTRA_RESOURCE_ID = "state_extra_resourceId";
-    private static final String STATE_EXTRA_COLOR_ID = "state_extra_colorId";
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
@@ -468,6 +466,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
+
         bundle.putParcelable(STATE_SUPER_PARCELABLE, super.onSaveInstanceState());
         bundle.putInt(STATE_MIN_LENGTH, minLength);
         bundle.putInt(STATE_MAX_LENGTH, maxLength);
@@ -481,7 +480,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
         bundle.putLong(STATE_FREEZE_DURATION, freezeDuration);
         bundle.putString(STATE_FREEZE_MSG, freezeMsg);
         bundle.putStringArray(STATE_PIN, pin);
-
         return bundle;
     }
+
 }

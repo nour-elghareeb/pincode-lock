@@ -21,7 +21,7 @@ Provides a pin code lock screen for android apps
  ![Library screen view](https://github.com/nour-elghareeb/pincode-lock/blob/master/library_screen.gif?raw=true)
 
 
-## Update V0.1.131
+## Update V0.1.132
   1. Added onSavedInstance and onRestoreInstance feature.
   2. IndicatorDots view is now detectable through findViewByTag() without having the need to 
    attach it manually
@@ -30,6 +30,8 @@ Provides a pin code lock screen for android apps
   4. Added library customization through XML
   5. Added setMode feature; it handles both verify and create pin processes
   6. Added customizable extra pin on the left-bottom of the view.
+  7. Fixed minor bugs
+ 
 
 ## Download
 To download the library, include this repository:
@@ -47,7 +49,7 @@ dependencies {
 	
 	//recyclerview dependency
 	implementation "com.android.support:recyclerview-v7:26.1.0"
-	compile 'com.ne:pincode-lock:0.1.131'
+	compile 'com.ne:pincode-lock:0.1.132'
 }
 ```
 ## Usage
@@ -245,7 +247,7 @@ To customize library copy these values to its appropriate resources files and up
 ```
 
 ## Known Bugs
-* maintaining/restoring view instance when activity is destroyed **(fixed in v0.1.131)**
+* maintaining/restoring view instance when activity is destroyed **(fixed in v0.1.132)**
 * Library not optimized for landscape orientation.
 
 ## Support 
