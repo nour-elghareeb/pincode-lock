@@ -4,16 +4,36 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- pin layout text color -->
     <color name="pincodelock_pin_color">#333333</color>
+    <!-- pin layout click ripple effect color -->
     <color name="pincodelock_rippleColor">#CCCCCC</color>
+    <!-- dots view container border color -->
     <color name="pincodelock_dotContainer_border">#F0F0F0</color>
+    <!-- dots view container background color -->
     <color name="pincodelock_dotContainer_background">#FCFCFC</color>
-    <color name="pincodelock_dot_color">#666666</color>
+    <!-- dots view container border color when animation error occurr -->
     <color name="pincodelock_dotContainer_border_error">#C00000</color>
-    <color name="pincodelock_dotContainer_border_success">#00A000</color>
+    <!-- dots view container background color when animation error occurr -->
     <color name="pincodelock_dotContainer_background_error">#FFFFFF</color>
+    <!-- dots view container border color when animation error occurr -->
+    <color name="pincodelock_dotContainer_border_success">#00A000</color>
+    <!-- dots view container background color when animation success occur -->
     <color name="pincodelock_dotContainer_background_success">#FFFFFF</color>
-    <color name="pincodeLock_pin_background_enabled">#FFFFFFFF</color>
-    <color name="pincodeLock_pin_background_disabled">#AADDDDDD</color>
+    <!-- actual dot color -->
+    <color name="pincodelock_dot_color">#666666</color>
+    <!-- message shown when the layout is frozen text color color -->
     <color name="pincodelock_freeze_msg_color">#666666</color>
+    <!--Background on PinLockView when is clickable-->
+    <color name="pincodeLock_pin_background_enabled">#FFFFFFFF</color>
+    <!--Background on PinLockView when is not clickable-->
+    <color name="pincodeLock_pin_background_disabled">#AADDDDDD</color>
+    <!-- extra pin color when in CREATE mode -->
+    <color name="pincodelock_extra_icon_pin_color__create_mode">@color/pincodelock_text_color</color>
+    <!-- extra pin color when in CONFIRM mode -->
+    <color name="pincodelock_extra_icon_pin_color__confirm_mode">@color/pincodelock_text_color</color>
+    <!-- extra pin color when in CONFIRMED mode -->
+    <color name="pincodelock_extra_icon_pin_color__confirmed_mode">#C00000</color>
+    <!-- extra pin color when in VERIFY mode -->
+    <color name="pincodelock_extra_icon_pin_color__verify_mode">@color/pincodelock_text_color</color>
 </resources>
