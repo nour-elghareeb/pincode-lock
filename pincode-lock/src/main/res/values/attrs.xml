@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PinLockView">
-        <!--XML customization for mode CREATE-->
-        <attr name="extraPinDrawable__create" format="reference"/>
-        <attr name="extraPinColor__create" format="color"/>
-        <!--XML customization for mode CONFIRM-->
-        <attr name="extraPinDrawable__confirm" format="reference"/>
-        <attr name="extraPinColor__confirm" format="color"/>
-        <!--XML customization for mode CONFIRMED-->
-        <attr name="extraPinDrawable__confirmed" format="reference"/>
-        <attr name="extraPinColor__confirmed" format="color"/>
-        <!--XML customization for mode VEIRFY-->
-        <attr name="extraPinDrawable__verify" format="reference"/>
-        <attr name="extraPinColor__verify" format="color"/>
+        <attr name="indicatorView" format="reference" />
+        <attr name="mode" format="enum">
+            <enum name="create" value="0"/>
+            <enum name="confirm" value="1"/>
+            <enum name="confirmed" value="2"/>
+            <enum name="verify" value="3"/>
+        </attr>
+        <attr name="requiredLength" format="integer"/>
+        <attr name="maxLength" format="integer"/>
+        <attr name="minLength" format="integer"/>
+        <attr name="maxAttempts" format="integer"/>
+        <attr name="maxConsecutiveBackspace" format="integer"/>
+        <attr name="freezeDuration" format="integer"/>
+        <attr name="freezeMsg" format="string"/>
     </declare-styleable>
 </resources>
