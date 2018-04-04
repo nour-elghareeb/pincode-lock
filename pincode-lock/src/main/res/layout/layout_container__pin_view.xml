@@ -7,10 +7,12 @@
         android:id="@+id/pinLockRecycler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/pincodeLock_pin_background_enabled"
+
         />
     <View
         android:id="@+id/zIndexView"
@@ -41,6 +43,7 @@
         android:background="@drawable/pincodelock_ripple_effect"
         app:layout_constraintDimensionRatio="1:1"
         android:visibility="visible"
+
         >
 
         <ImageView
