@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PincodeLock</string>
     <string name="_backsapce">Backsapce</string>
+    <string name="customizable_extra_button">Customizable extra button</string>
 </resources>
