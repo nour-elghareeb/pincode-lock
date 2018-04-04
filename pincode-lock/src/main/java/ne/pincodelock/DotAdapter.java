@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Adapter for PinDotView the recycler
  */
 
-class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockListener {
+class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements DotLayoutChangeListener {
     //tag for logging
     private static final String TAG = DotAdapter.class.getSimpleName();
     // Arraylist to hold the dot models
@@ -41,10 +41,9 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockL
         }
 
     }
-
     @Override
     public int getItemViewType(int position) {
-        return R.layout.dot_view;
+        return R.layout.layout_viewholder__dot_icon;
     }
 
     @Override
@@ -52,20 +51,23 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockL
         return models.size();
     }
 
+    private Context getContext() {
+        return context;
+    }
+
     /**
-     * <p>gets called whenever pin code changed</p>
-     * It reflects the current pin code to the dot view based on pin length.
-     * @param pin current pincode
+     * Called whenever PIN is chaged to reflect on the dots view.
+     * @param newLength new pin length
      */
     @Override
-    public void onPinChange(String pin) {
+    public void onPinLengthChange(int newLength) {
         int lastPos = models.size() - 1;
-        if (pin.length() == 0){
+        if (newLength == 0){
             models.clear();
             notifyDataSetChanged();
         }
-        else if (models.size() - pin.length() == Math.abs(1) ){
-            if (models.size() > pin.length()){
+        else if (models.size() - newLength == Math.abs(1) ){
+            if (models.size() > newLength){
                 models.remove(lastPos);
                 notifyItemRemoved(lastPos);
             }else {
@@ -74,39 +76,10 @@ class DotAdapter extends RecyclerView.Adapter<DotViewHolder> implements PinLockL
             }
         }else{
             models.clear();
-            for (int i = 0; i < pin.length(); i++){
+            for (int i = 0; i < newLength; i++){
                 models.add(new DotModel(i));
             }
             notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onPinReachRequiredLength(String pin) {
-
-    }
-
-    @Override
-    public boolean onPinReachMaxLength(String pin) {
-        return false;
-    }
-
-    @Override
-    public boolean onPinReAttempt(boolean fromClear, int attemptNumber) {
-        return false;
-    }
-
-    @Override
-    public boolean onPinAttemptReachLimit(int attemptLimitReachedCount) {
-        return false;
-    }
-
-    @Override
-    public void onPinFreezeStateChanged(boolean isEnabled) {
-
-    }
-
-    public Context getContext() {
-        return context;
     }
 }
