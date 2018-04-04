@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="PinLockView">
+        <!--XML customization for mode CREATE-->
+        <attr name="extraPinDrawable__create" format="reference"/>
+        <attr name="extraPinColor__create" format="color"/>
+        <!--XML customization for mode CONFIRM-->
+        <attr name="extraPinDrawable__confirm" format="reference"/>
+        <attr name="extraPinColor__confirm" format="color"/>
+        <!--XML customization for mode CONFIRMED-->
+        <attr name="extraPinDrawable__confirmed" format="reference"/>
+        <attr name="extraPinColor__confirmed" format="color"/>
+        <!--XML customization for mode VEIRFY-->
+        <attr name="extraPinDrawable__verify" format="reference"/>
+        <attr name="extraPinColor__verify" format="color"/>
+    </declare-styleable>
 </resources>
