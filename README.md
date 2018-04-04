@@ -1,6 +1,8 @@
 # Pincode-Lock
 Provides a pin code lock screen for android apps
 
+
+
 ## Features:
   * Customizable colors, backgrounds, sizes, etc...
   * Auto error handling animation.
@@ -18,6 +20,17 @@ Provides a pin code lock screen for android apps
  
  ![Library screen view](https://github.com/nour-elghareeb/pincode-lock/blob/master/library_screen.gif?raw=true)
 
+
+## Update V0.1.131
+  1. Added onSavedInstance and onRestoreInstance feature.
+  2. IndicatorDots view is now detectable through findViewByTag() without having the need to 
+   attach it manually
+  3. PinCodeLockListener is now automatically detected if it is implemented
+   in the activity/fragment (no need to setListener any more).
+  4. Added library customization through XML
+  5. Added setMode feature; it handles both verify and create pin processes
+  6. Added customizable extra pin on the left-bottom of the view.
+
 ## Download
 To download the library, include this repository:
 ```gradle
@@ -34,7 +47,7 @@ dependencies {
 	
 	//recyclerview dependency
 	implementation "com.android.support:recyclerview-v7:26.1.0"
-	compile 'com.ne:pincode-lock:0.1.124'
+	compile 'com.ne:pincode-lock:0.1.131'
 }
 ```
 ## Usage
@@ -54,6 +67,7 @@ Set up your xml layout:
 		app:layout_constraintBottom_toTopOf="@id/pinLockView"		
 		android:layout_marginStart="10dp"
 		android:layout_marginEnd="10dp"
+		
 	/>
 	<ne.pincodelock.PinLockView
 		android:id="@+id/pinLockView"
@@ -64,8 +78,15 @@ Set up your xml layout:
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:mode="verify"
+		app:maxLength="10"
+        app:requiredLength="4"
+        app:maxConsecutiveBackspace="2"
+        app:maxAttempts="4"
+        app:minLength="3"
 	/>
 </android.support.constraint.ConstraintLayout>
+
 ```
 
 In java activity/fragment:
@@ -169,26 +190,38 @@ To customize library copy these values to its appropriate resources files and up
 ```xml
 <!-- colors.xml -->
 <resources>
-    <!-- pin layout text color -->
-    <color name="pincodelock_pin_color">#333333</color>
-    <!-- pin layout click ripple effect color -->
-    <color name="pincodelock_rippleColor">#CCCCCC</color>
-    <!-- dots view container border color -->
-    <color name="pincodelock_dotContainer_border">#F0F0F0</color>
-    <!-- dots view container background color -->
-    <color name="pincodelock_dotContainer_background">#FCFCFC</color>
-    <!-- dots view container border color when animation error occurr -->
-    <color name="pincodelock_dotContainer_border_error">#C00000</color>
-    <!-- dots view container background color when animation error occurr -->
-    <color name="pincodelock_dotContainer_background_error">#FFFFFF</color>
-    <!-- dots view container border color when animation error occurr -->
-    <color name="pincodelock_dotContainer_border_success">#00A000</color>
-    <!-- dots view container background color when animation success occur -->
-    <color name="pincodelock_dotContainer_background_success">#FFFFFF</color>
-    <!-- actual dot color -->
-    <color name="pincodelock_dot_color">#666666</color>
-    <!-- message shown when the layout is frozen text color color -->
-    <color name="pincodelock_freeze_msg_color">#666666</color>
+   <!-- pin layout text color -->
+       <color name="pincodelock_pin_color">#333333</color>
+       <!-- pin layout click ripple effect color -->
+       <color name="pincodelock_rippleColor">#CCCCCC</color>
+       <!-- dots view container border color -->
+       <color name="pincodelock_dotContainer_border">#F0F0F0</color>
+       <!-- dots view container background color -->
+       <color name="pincodelock_dotContainer_background">#FCFCFC</color>
+       <!-- dots view container border color when animation error occurr -->
+       <color name="pincodelock_dotContainer_border_error">#C00000</color>
+       <!-- dots view container background color when animation error occurr -->
+       <color name="pincodelock_dotContainer_background_error">#FFFFFF</color>
+       <!-- dots view container border color when animation error occurr -->
+       <color name="pincodelock_dotContainer_border_success">#00A000</color>
+       <!-- dots view container background color when animation success occur -->
+       <color name="pincodelock_dotContainer_background_success">#FFFFFF</color>
+       <!-- actual dot color -->
+       <color name="pincodelock_dot_color">#666666</color>
+       <!-- message shown when the layout is frozen text color color -->
+       <color name="pincodelock_freeze_msg_color">#666666</color>
+       <!--Background on PinLockView when is clickable-->
+       <color name="pincodeLock_pin_background_enabled">#FFFFFFFF</color>
+       <!--Background on PinLockView when is not clickable-->
+       <color name="pincodeLock_pin_background_disabled">#FFFFFFFF</color>
+       <!-- extra pin color when in CREATE mode -->
+       <color name="pincodelock_extra_icon_pin_color__create_mode">@color/pincodelock_text_color</color>
+       <!-- extra pin color when in CONFIRM mode -->
+       <color name="pincodelock_extra_icon_pin_color__confirm_mode">@color/pincodelock_text_color</color>
+       <!-- extra pin color when in CONFIRMED mode -->
+       <color name="pincodelock_extra_icon_pin_color__confirmed_mode">#C00000</color>
+       <!-- extra pin color when in VERIFY mode -->
+       <color name="pincodelock_extra_icon_pin_color__verify_mode">@color/pincodelock_text_color</color>
        
     
     <!-- dimens.xml -->
@@ -212,7 +245,8 @@ To customize library copy these values to its appropriate resources files and up
 ```
 
 ## Known Bugs
-* maintaining/restoring view instance when activity is destroyed
+* maintaining/restoring view instance when activity is destroyed **(fixed in v0.1.131)**
+* Library not optimized for landscape orientation.
 
 ## Support 
 For any bugs or suggestions regarding the library, feel free to open an issue. 
