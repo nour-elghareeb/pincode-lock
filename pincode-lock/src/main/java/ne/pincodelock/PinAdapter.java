@@ -1,6 +1,9 @@
 package ne.pincodelock;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.AnyThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +17,10 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     // A string representation for logging
     private static final String TAG = PinAdapter.class.getSimpleName();
     // A list that holds Pin rows
-    private final PinRowModel[] models;
+    private PinRowModel[] models;
     // Max length for the pincode
     private int maxLength;
+    private int minLength;
     // String builder for the pincode
     private StringBuilder pin;
     // Array that holds xml attributes.
@@ -25,7 +29,20 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     private int consecutiveBackspace;
     private int maxConsecutiveBackspace = 2;
     private boolean clickable = true;
+    private boolean isLayoutReady;
 
+    @AnyThread
+    private void runOnMainThread(Runnable runnable){
+        new Handler(Looper.getMainLooper()).postDelayed(runnable, (long) 0);
+    }
+
+    int getConsecutiveBackspace() {
+        return consecutiveBackspace;
+    }
+
+    int getMaxConsecutiveBackspace(){
+        return maxConsecutiveBackspace;
+    }
 
     /**
      * <p>A constructor for the pin adapter</p>
@@ -33,12 +50,26 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
      */
     PinAdapter(Context context) {
         this.context = context;
-        models = new PinRowModel[]{
-                new PinRowModel(0),
-                new PinRowModel(1),
-                new PinRowModel(2),
-                new PinRowModel(3),
-        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                models = new PinRowModel[]{
+                        new PinRowModel(0),
+                        new PinRowModel(1),
+                        new PinRowModel(2),
+                        new PinRowModel(3),
+                };
+                runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
+
+                isLayoutReady = true;
+            }
+        }).start();
+
         pin = new StringBuilder();
     }
 
@@ -60,10 +91,10 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
         // inflate the view based on the view type
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         // if the viewtype was aint attemptNumber generic row
-        if (viewType == R.layout.pin_row)
+        if (viewType == R.layout.layout_viewholder__pin_row)
             return new PinRowViewHolder(view, this);
         // if the type was last row
-        else if (viewType == R.layout.pin_last_row)
+        else if (viewType == R.layout.layout_viewholder__pin_last_row)
                 return new PinLastRowViewHolder(view, this);
         // unreachable state..
         return null;
@@ -83,18 +114,20 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
 
     @Override
     public int getItemCount() {
-        return 4;
+        if (models != null)
+            return models.length;
+        else return 0;
     }
 
     @Override
     public int getItemViewType(final int position) {
         // return the view of any other generic row.
         if (position < 3){
-            return R.layout.pin_row;
+            return R.layout.layout_viewholder__pin_row;
         }
         // return the view of the last row
         else{
-            return R.layout.pin_last_row;
+            return R.layout.layout_viewholder__pin_last_row;
         }
     }
 
@@ -209,12 +242,12 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     /**
      * Clear pin value
      */
-    public void clearPin() {
+    void clearPin() {
         pin = new StringBuilder();
         listener.onPinChange(pin.toString());
     }
 
-    public Context getContext() {
+    Context getContext() {
         return context;
     }
 
@@ -223,7 +256,16 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
         this.clickable = clickable;
     }
 
-    public void setMaxConsecutiveBackspace(int maxConsecutiveBackspace) {
+    @AnyThread
+    void setMaxConsecutiveBackspace(int maxConsecutiveBackspace) {
         this.maxConsecutiveBackspace = maxConsecutiveBackspace;
+    }
+
+    void setMinLength(int minLength) {
+        this.minLength = minLength;
+    }
+
+    void setConsecutiveBackspace(int consecutiveBackspace) {
+        this.consecutiveBackspace = consecutiveBackspace;
     }
 }
