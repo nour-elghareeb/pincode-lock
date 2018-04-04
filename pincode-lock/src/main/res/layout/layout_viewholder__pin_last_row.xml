@@ -9,6 +9,7 @@
         style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/center"
+        android:visibility="invisible"
         />
     <TextView
         android:id="@+id/center"
