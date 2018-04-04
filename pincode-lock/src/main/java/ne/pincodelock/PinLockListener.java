@@ -1,5 +1,7 @@
 package ne.pincodelock;
 
+import android.support.annotation.Nullable;
+
 /**
  * An interface that connects the pin adapter to every other class that needs the current pin
  * number
@@ -17,7 +19,7 @@ public interface PinLockListener {
      * @param pin String: current pin
      * @see  PinLockRecycler#setRequiredLength(int)
      */
-    void onPinReachRequiredLength(String pin);
+    boolean onPinReachRequiredLength(String pin);
 
     /**
      * Called when pin code's length reaches pre-set maximum value.
@@ -48,8 +50,30 @@ public interface PinLockListener {
     boolean onPinAttemptReachLimit(int attemptLimitReachedCount);
 
     /**
+     * Called when user click on the extra pin (bottom-left)
+     * @param currentMode current view mode
+     * @param currentPin current pin
+     * @param pinToBeConfirmed pin user chose that need to be confirmed (always null unless the mode
+     *                         is {@link PinLockMode#CONFIRM})
+     * @return false to apply default action, true to consume event in the listener
+     */
+    boolean onExtraPinClick(PinLockMode currentMode, String currentPin, @Nullable String pinToBeConfirmed);
+    /**
      * Called whenever app user input is enabled/disabled when attempts run out.
      * @param isEnabled true if enabled, false if disabled
      */
-    void onPinFreezeStateChanged(boolean isEnabled);
+    void onPinClickableStateChanged(boolean isEnabled);
+
+    /**
+     * Called whenever PinLockView mode changed internally or externally
+     * @param mode current mode.
+     * @return false to apply default action, true to consume event in the listener
+     */
+    boolean onPinModeChanged(PinLockMode mode);
+
+    /**
+     * Called when user clicks on any pin while the view is not clickable..
+     */
+    void onDisabledPinClick();
+
 }
