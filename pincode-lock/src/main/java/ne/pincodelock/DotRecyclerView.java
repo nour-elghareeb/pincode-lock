@@ -11,7 +11,7 @@ import android.util.AttributeSet;
  */
 
 class DotRecyclerView extends RecyclerView {
-    // A string represntation for the dots.
+    // A string representation for the dots.
     private static final String TAG = DotRecyclerView.class.getSimpleName();
     private DotAdapter adapter;
     public DotRecyclerView(Context context) {
