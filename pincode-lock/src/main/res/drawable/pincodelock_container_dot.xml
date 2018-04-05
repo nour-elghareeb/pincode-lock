@@ -4,10 +4,5 @@
         android:color="@color/pincodelock_dotContainer_border" />
 
     <solid android:color="@color/pincodelock_dotContainer_background" />
-
-    <padding
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp" />
-    <corners android:radius="500dp" />
+    <corners android:radius="@dimen/pincodelock_dotContainer_border_radius" />
 </shape>
