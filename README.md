@@ -100,37 +100,39 @@ public class MainActivity extends AppCompatActivity implements PinLockListener {
     public onCreate(savedInstanceState Bundle) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Assign Dots view
-        IndicatorDotView dotsView = findViewById(R.id.dotsView);
-        // Assign PinLockView
-        PinLockView pinLockView = findViewById(R.id.pinLockView);
-        
-        // Attach dots view to pinlockview
-        pinLockView.attachPinDotView(dotsView);
-        
-        // Maximum length the user can input (default is 15)
-        pinLockView.setMaxLength(15);
-        
-        // Actual required pincode length (default is 4)
-        pinLockView.setRequiredLength(4);
-        
-        // input freeze duration is seconds when the user run out of attempts. (default is 30 seconds)
-        pinLockView.setFreezeDuration(30);
-        
-        // Maximum number of attempts before freezing input (default is 5)
-        pinLockView.setMaxNumberOfAttempts(5);
-        
-        // Maximum consecutive number of backspace touches to consider as an attempt (default is 2)
-        pinLockView.setMaxConsecutiveBackspaceForAnAttempt(2);
-        
-        // set pin progromatically. Useful if you want to restore pin after onRestoreInstance 
-        pinLockView.setPin("1234");
-        
-        // Make your activity/fragment implement a PinCodeLockListener or create a new instance and set a listener.
-        pinLockView.setPinChangeListener(this);
-        
-        // Setting mode
-        pinLockView.setMode(PinLockMode.VERIFY);
+        if (Bundle != null){
+            // Assign Dots view
+            IndicatorDotView dotsView = findViewById(R.id.dotsView);
+            // Assign PinLockView
+            PinLockView pinLockView = findViewById(R.id.pinLockView);
+            
+            // Attach dots view to pinlockview
+            pinLockView.attachPinDotView(dotsView);
+            
+            // Maximum length the user can input (default is 15)
+            pinLockView.setMaxLength(15);
+            
+            // Actual required pincode length (default is 4)
+            pinLockView.setRequiredLength(4);
+            
+            // input freeze duration is seconds when the user run out of attempts. (default is 30 seconds)
+            pinLockView.setFreezeDuration(30);
+            
+            // Maximum number of attempts before freezing input (default is 5)
+            pinLockView.setMaxNumberOfAttempts(5);
+            
+            // Maximum consecutive number of backspace touches to consider as an attempt (default is 2)
+            pinLockView.setMaxConsecutiveBackspaceForAnAttempt(2);
+            
+            // set pin progromatically. Useful if you want to restore pin after onRestoreInstance 
+            pinLockView.setPin("1234");
+            
+            // Make your activity/fragment implement a PinCodeLockListener or create a new instance and set a listener.
+            pinLockView.setPinChangeListener(this);
+            
+            // Setting mode
+            pinLockView.setMode(PinLockMode.VERIFY);
+        }
         
     }
 }
