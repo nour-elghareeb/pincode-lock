@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transition xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- The drawables used here can be solid colors, gradients, shapes, images, etc. -->
-    <item android:drawable="@drawable/dot_container" />
+    <item android:drawable="@drawable/pincodelock_container_dot" />
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
             <stroke
