@@ -127,62 +127,77 @@ public class MainActivity extends AppCompatActivity implements PinLockListener {
         pinLockView.setPin("1234");
         
         // Make your activity/fragment implement a PinCodeLockListener or create a new instance and set a listener.
-        pinLockView.setPinChangeListener(this);                      
+        pinLockView.setPinChangeListener(this);
+        
+        // Setting mode
+        pinLockView.setMode(PinLockMode.VERIFY);
+        
     }
     
-    /**
-     * Called when a pin length change occur
-     * @param pin String: current pin
-     */
-    @Override
-    public void onPinChange(String pin) {
-        Log.w(TAG, pin);
-    }
-    /**
-     * Called when pin code reaches pre-set required length to apply custom pin-verification
-     * @param pin String: current pin     
-     */
-    @Override
-    public void onPinReachRequiredLength(String pin) {
-
-    }
-    /**
-     * Called when pin code's length reaches pre-set maximum value.    
-     * @return false to clear pin and start default error animation,
-     * True to consume event in the listener         
-     */
-    @Override
-    public boolean onPinReachMaxLength(String pin) {
-        return false;
-    }
-    /**
-     * <p>Called when user re-attempt to enter PIN code and still has attempts left.</p>
-     * <p>Attempts increase by either reaching the max pin length or hitting the backspace the
-     * pre-set max limit of consecutive touches</p>
-     * @param fromClear true when the attempt was caused by max-length clear, false when a
-     *                  consecutive backspace limit was reached
-     * @return false to start default error animation, true to consume event in the listener
-     */
-    @Override
-    public boolean onPinReAttempt(boolean fromClear) {
-        return false;
-    }
-    /**
-     * Called when user reach the pre-set limit of attempts. Default is 30 seconds
-     * @param attemptLimitReachedCount the number of times user reached limit.
-     * @return false to disable input for the pre-set freeze duration.
-     */
-    @Override
-    public boolean onPinAttemptReachLimit(int attemptLimitReachedCount) {
-        return false;
-    }
-    /**
-     * Called whenever app user input is enabled/disabled when attempts run out.
-     * @param isEnabled true if enabled, false if disabled
-     */
-    @Override
-    public void onPinFreezeStateChanged(boolean isEnabled) {
-    }       
+     /**
+         * Called when a pin length change occur
+         * @param pin String: current pin
+         */
+        void onPinChange(String pin);
+    
+        /**
+         * Called when pin code reaches pre-set required length to apply custom pin-verification
+         * @param pin String: current pin
+         */
+        boolean onPinReachRequiredLength(String pin);
+    
+        /**
+         * Called when pin code's length reaches pre-set maximum value.
+    
+         * @param pin String: current pin
+         * @return false to clear pin and start default error animation,
+         * True to consume event in the listener
+         */
+        boolean onPinReachMaxLength(String pin);
+        /**
+         * <p>Called when user re-attempt to enter PIN code and still has attempts left.</p>
+         * <p>Attempts increase by either reaching the max pin length or hitting the pincodelock_backspace_icon the
+         * pre-set max limit of consecutive touches</p>
+         * @param fromClear true when the attempt was caused by max-length clear, false when a
+         *                  consecutive pincodelock_backspace_icon limit was reached
+         * @param attemptNumber current number of attempts
+         * @return false to start default error animation, true to consume event in the listener
+         */
+        boolean onPinReAttempt(boolean fromClear, int attemptNumber);
+    
+        /**
+         * Called when user reach the pre-set limit of attempts. Default is 30 seconds
+         * @param attemptLimitReachedCount the number of times user reached limit.
+         * @return false to disable input for the pre-set freeze duration.
+         */
+        boolean onPinAttemptReachLimit(int attemptLimitReachedCount);
+    
+        /**
+         * Called when user click on the extra pin (bottom-left)
+         * @param currentMode current view mode
+         * @param currentPin current pin
+         * @param pinToBeConfirmed pin user chose that need to be confirmed (always null unless the mode
+         *                         is #CONFIRMED
+         * @return false to apply default action, true to consume event in the listener
+         */
+        boolean onExtraPinClick(PinLockMode currentMode, String currentPin, @Nullable String pinToBeConfirmed);
+        /**
+         * Called whenever app user input is enabled/disabled when attempts run out.
+         * @param isEnabled true if enabled, false if disabled
+         */
+        void onPinClickableStateChanged(boolean isEnabled);
+    
+        /**
+         * Called whenever PinLockView mode changed internally or externally
+         * @param mode current mode.
+         * @return false to apply default action, true to consume event in the listener
+         */
+        boolean onPinModeChanged(PinLockMode mode);
+    
+        /**
+         * Called when user clicks on any pin while the view is not clickable..
+         */
+        void onDisabledPinClick();   
 }
 
 ```
@@ -230,19 +245,23 @@ To customize library copy these values to its appropriate resources files and up
     <!-- dimens.xml -->
     
     <!-- message shown when the layout is frozen text size -->
-    <dimen name="pincodelock_freeze_msg_textsize">15sp</dimen>
-    <!-- pin layout text size -->
-    <dimen name="pincodelock_pin_textsize">25sp</dimen>
-    <!-- pin layout row minimum height -->
-    <dimen name="pincodelock_pinRow_minHeight">60dp</dimen>
-    <!-- pin layout row maximum height -->
-    <dimen name="pincodelock_pinRow_maxHeight">80dp</dimen>
-    <!-- pin layout row horizontal margin -->
-    <dimen name="pincodelock_pinRow_marginHorizontal">25dp</dimen>
-    <!-- pin layout row vertical margin -->
-    <dimen name="pincodelock_pinRow_marginVertical">10dp</dimen>
-    <!-- each pin padding (affects ripple) minimum height -->
-    <dimen name="pincodelock_pin_padding">15dp</dimen>
+        <dimen name="pincodelock_freeze_msg_textsize">15sp</dimen>
+        <!-- pin layout text size -->
+        <dimen name="pincodelock_pin_textsize">25sp</dimen>
+        <!-- pin layout row minimum height -->
+        <dimen name="pincodelock_pinRow_minHeight">60dp</dimen>
+        <!-- pin layout row maximum height -->
+        <dimen name="pincodelock_pinRow_maxHeight">80dp</dimen>
+        <!-- pin layout row horizontal margin -->
+        <dimen name="pincodelock_pinRow_marginHorizontal">25dp</dimen>
+        <!-- pin layout row vertical margin -->
+        <dimen name="pincodelock_pinRow_marginVertical">10dp</dimen>
+        <!-- each pin padding (affects ripple) minimum height -->
+        <dimen name="pincodelock_pin_padding">15dp</dimen>
+        <!-- dot indicator container radius -->
+        <dimen name="pincodelock_dotContainer_border_radius">8dp</dimen>
+        <!-- dot icon size -->
+        <dimen name="pincodelock_dot_icon_size">20dp</dimen>
     
 </resources>
 ```
