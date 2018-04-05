@@ -11,7 +11,6 @@ import android.support.annotation.UiThread;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -195,7 +194,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
      */
     public void clearHighlight(){
         if (pinDotRecycler != null)
-            ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(getResources().getDrawable(R.drawable.dot_container));
+            ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(getResources().getDrawable(R.drawable.pincodelock_container_dot));
     }
 
     @Override
@@ -328,9 +327,9 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     }
 
     /**
-     * Set the max number of consecutive backspace to consider an attempt.
+     * Set the max number of consecutive pincodelock_backspace_icon to consider an attempt.
      * <p>Set to -1 to disable feature.</p>
-     * @param count consecutive backspace count. Default is 2
+     * @param count consecutive pincodelock_backspace_icon count. Default is 2
      */
     @AnyThread
     public void setMaxConsecutiveBackspaceForAnAttempt(int count){
@@ -343,7 +342,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
      */
     public void showSuccessAnimation(){
         if (pinDotRecycler != null) {
-            final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.dot_container_hightlight_success);
+            final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot_hightlight_success);
             ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(transition);
             transition.startTransition(400);
         }
@@ -356,7 +355,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     public void showErrorAnimation(){
         if (pinDotRecycler != null){
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
-            final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.dot_container_hightlight_error);
+            final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot_hightlight_error);
             ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(transition);
 
             anim.setAnimationListener(new Animation.AnimationListener() {

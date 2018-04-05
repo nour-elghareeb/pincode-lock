@@ -35,11 +35,11 @@ class PinRowModel {
                 center = new PinModel(rowStartValue+1);
                 right = new PinModel(rowStartValue+2);
                 break;
-            // the last row that holds the backspace.
+            // the last row that holds the pincodelock_backspace_icon.
             case 10:
                 left = new PinModel(-1);
                 center = new PinModel(0);
-                right = new PinModel(R.drawable.backspace);
+                right = new PinModel(R.drawable.pincodelock_backspace_icon);
                 break;
         }
     }

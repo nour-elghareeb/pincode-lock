@@ -32,10 +32,10 @@ public interface PinLockListener {
     boolean onPinReachMaxLength(String pin);
     /**
      * <p>Called when user re-attempt to enter PIN code and still has attempts left.</p>
-     * <p>Attempts increase by either reaching the max pin length or hitting the backspace the
+     * <p>Attempts increase by either reaching the max pin length or hitting the pincodelock_backspace_icon the
      * pre-set max limit of consecutive touches</p>
      * @param fromClear true when the attempt was caused by max-length clear, false when a
-     *                  consecutive backspace limit was reached
+     *                  consecutive pincodelock_backspace_icon limit was reached
      * @param attemptNumber current number of attempts
      * @return false to start default error animation, true to consume event in the listener
      */

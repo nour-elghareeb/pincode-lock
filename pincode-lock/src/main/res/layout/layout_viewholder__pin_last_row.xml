@@ -34,7 +34,7 @@
             android:layout_height="@dimen/pincodelock_pin_textsize"
             android:gravity="center"
 
-            android:src="@drawable/backspace" />
+            android:src="@drawable/pincodelock_backspace_icon" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

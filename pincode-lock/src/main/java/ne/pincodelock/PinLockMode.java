@@ -9,15 +9,15 @@ public enum PinLockMode {
      * Denotes a mode for inserting new pin. Disables all input restriction and starts a process flow
      * That change the extra pin layout until the pin is confirmed
      */
-    CREATE(R.drawable.check_icon, R.color.pincodelock_extra_icon_pin_color__create_mode),
+    CREATE(R.drawable.pincodelock_outline_check_icon, R.color.pincodelock_extra_icon_pin_color__create_mode),
     /**
      * Denotes a mode for confirming the new pin.
      */
-    CONFIRM(R.drawable.reset_icon, R.color.pincodelock_extra_icon_pin_color__confirm_mode),
+    CONFIRM(R.drawable.pincodelock_reset_icon, R.color.pincodelock_extra_icon_pin_color__confirm_mode),
     /**
      * Denotes a mode when the user confirms the chosen PIN successfully
      */
-    CONFIRMED(R.drawable.reset_icon, R.color.pincodelock_extra_icon_pin_color__confirmed_mode),
+    CONFIRMED(R.drawable.pincodelock_reset_icon, R.color.pincodelock_extra_icon_pin_color__confirmed_mode),
     /**
      * Denotes a verification mode in which all the default input restrictions are applied
      */

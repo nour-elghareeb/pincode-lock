@@ -12,17 +12,17 @@ interface PinAdapterInterface {
     void onNumberAction(String number);
 
     /**
-     * Called whenever a backspace firing..
+     * Called whenever a pincodelock_backspace_icon firing..
      */
     void onBackspaceAction();
 
     /**
-     * Called when user lift their finger off the backspace
+     * Called when user lift their finger off the pincodelock_backspace_icon
      */
     void onBackspaceUp();
 
     /**
-     * Called when user touches the backspace
+     * Called when user touches the pincodelock_backspace_icon
      */
     void onBackspaceDown();
 

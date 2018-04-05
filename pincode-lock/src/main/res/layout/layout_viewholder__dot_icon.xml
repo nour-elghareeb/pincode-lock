@@ -11,6 +11,6 @@
         android:layout_height="15dp"
         android:layout_gravity="center"
         app:layout_constraintDimensionRatio="1:1"
-        android:background="@drawable/dot_background"
+        android:background="@drawable/pincodelock_dot_background"
         />
 </LinearLayout>

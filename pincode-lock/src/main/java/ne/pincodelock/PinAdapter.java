@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.AnyThread;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     private StringBuilder pin;
     // Array that holds xml attributes.
     private Context context;
-    // backspace counter to detect attempts
+    // pincodelock_backspace_icon counter to detect attempts
     private int consecutiveBackspace;
     private int maxConsecutiveBackspace = 2;
     private boolean clickable = true;
@@ -87,7 +88,8 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
      */
     private PinLockListener listener;
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate the view based on the view type
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         // if the viewtype was aint attemptNumber generic row
@@ -97,11 +99,11 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
         else if (viewType == R.layout.layout_viewholder__pin_last_row)
                 return new PinLastRowViewHolder(view, this);
         // unreachable state..
-        return null;
+        throw new RuntimeException("Invalid viewType");
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // if position is 3; ie, the last row
         if (position == 3) {
             ((PinLastRowViewHolder) holder).bindData(models[position]);
@@ -149,7 +151,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
         // make sure the pin hasn't reached max
         if (!hasReachedMaxLength()) {
             consecutiveBackspace = 0;
-            // get the backspace-allow state before adding the number
+            // get the pincodelock_backspace_icon-allow state before adding the number
             boolean backspaceAllowedBefore = isBackspaceAllowed();
             // append the pin with the newly added number
             pin.append(number);
@@ -159,7 +161,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     }
 
     /**
-     * <p>This gets called from within the ViewHolder instance to indicate backspace action is
+     * <p>This gets called from within the ViewHolder instance to indicate pincodelock_backspace_icon action is
      * fired</p>
      * <p>Remove the last number from pin and notify pin change</p>
      */
@@ -179,8 +181,8 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
 
     /**
      * <p>Gets called from within the last row ViewHolder instance to indicate user has lift his finger
-     * of the backspace button, ACTION_UP</p>
-     * <p>If the backspace-allow state changed between the DOWN and UP event, notify adapter to
+     * of the pincodelock_backspace_icon button, ACTION_UP</p>
+     * <p>If the pincodelock_backspace_icon-allow state changed between the DOWN and UP event, notify adapter to
      * redraw the last row</p>
      * <p>If the pin length was max before the touch DOWN, notify adapter to redraw the all pins
      * to re-enable the user input on numbers</p>
@@ -190,9 +192,9 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
 
     }
     /**
-     * <p>This gets called from within the ViewHolder instance to indicate backspace is pressed,
+     * <p>This gets called from within the ViewHolder instance to indicate pincodelock_backspace_icon is pressed,
      * ACTION_DOWN</p>
-     * <p>Stores the current state of whether the pin was max before the backspace firing</p>
+     * <p>Stores the current state of whether the pin was max before the pincodelock_backspace_icon firing</p>
      */
     @Override
     public void onBackspaceDown() {
@@ -208,7 +210,7 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     }
 
     /**
-     * Checks if the backspace action is allowed
+     * Checks if the pincodelock_backspace_icon action is allowed
      * @return true if the pin is not empty, false otherwise
      */
     @Override

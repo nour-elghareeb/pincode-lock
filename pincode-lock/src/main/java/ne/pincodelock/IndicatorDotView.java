@@ -34,8 +34,8 @@ public class IndicatorDotView extends ConstraintLayout {
 
 
     private void init() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.layout_container__indicator_dots_view, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_container__indicator_dots_view,
+                this);
         setTag(getClass().getSimpleName());
 
     }
@@ -46,9 +46,9 @@ public class IndicatorDotView extends ConstraintLayout {
         recycler = findViewById(R.id.dotRecycler);
         dotMsgView = findViewById(R.id.dotMsgView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            setBackground(getContext().getResources().getDrawable(R.drawable.dot_container));
+            setBackground(getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot));
         }else{
-            setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.dot_container));
+            setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot));
         }
         setPadding(20, 20, 20, 20);
         setMinimumHeight(130);

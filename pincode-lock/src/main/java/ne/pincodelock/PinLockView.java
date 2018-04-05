@@ -222,9 +222,9 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         pinLockRecycler.clearHighlight();
     }
     /**
-     * Set the max number of consecutive backspace to consider an attempt.
+     * Set the max number of consecutive pincodelock_backspace_icon to consider an attempt.
      * <p>Set to -1 to disable feature.</p>
-     * @param count consecutive backspace count. Default is 2
+     * @param count consecutive pincodelock_backspace_icon count. Default is 2
      */
     @AnyThread
     public void setMaxConsecutiveBackspaceForAnAttempt(int count){
