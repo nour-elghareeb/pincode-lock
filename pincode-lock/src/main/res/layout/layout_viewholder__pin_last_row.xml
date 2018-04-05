@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/pinRowStyle"
-    android:orientation="horizontal"
+
     >
     <TextView
         android:id="@+id/left"
@@ -20,7 +20,7 @@
         />
     <LinearLayout
         android:id="@+id/rightLayout"
-        style="@style/pincodelock_pinStyle"
+        style="@style/pincodelock_pinNumberStyle"
         app:layout_constraintStart_toEndOf="@id/center"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -33,7 +33,6 @@
             android:layout_width="@dimen/pincodelock_pin_textsize"
             android:layout_height="@dimen/pincodelock_pin_textsize"
             android:gravity="center"
-
             android:src="@drawable/pincodelock_backspace_icon" />
     </LinearLayout>
 

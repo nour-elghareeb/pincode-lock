@@ -39,6 +39,8 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     private PinLockInternalListener internalListener;
     private PinLockMode mode = PinLockMode.VERIFY;
     private String[] pin = new String[2];
+    private boolean canScrollVertically;
+    private boolean succesHighlight;
 
     public PinLockRecycler(Context context) {
         super(context);
@@ -51,19 +53,28 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     public PinLockRecycler(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
+    public boolean canScrollVertically(){
+        return canScrollVertically;
+    }
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        setTag(getClass().getSimpleName());
         adapter = new PinAdapter(getContext());
         adapter.setMaxLength(maxLength);
         adapter.setMinLength(minLength);
-        setLayoutManager(new LinearLayoutManager(getContext()));
+        setLayoutManager(new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return PinLockRecycler.this.canScrollVertically();
+            }
+        });
         setHasFixedSize(true);
         adapter.setListener(this);
         adapter.setMaxLength(maxLength);
         setAdapter(adapter);
         setOverScrollMode(OVER_SCROLL_NEVER);
+
     }
     /**
      * Attach a DotView to represent current pin as dots if not detected automatically..
@@ -193,8 +204,10 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
      * Clear dotsView highlight color (error/success)
      */
     public void clearHighlight(){
-        if (pinDotRecycler != null)
+        if (pinDotRecycler != null) {
             ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(getResources().getDrawable(R.drawable.pincodelock_container_dot));
+            succesHighlight = false;
+        }
     }
 
     @Override
@@ -342,6 +355,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
      */
     public void showSuccessAnimation(){
         if (pinDotRecycler != null) {
+            succesHighlight = true;
             final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot_hightlight_success);
             ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(transition);
             transition.startTransition(400);
@@ -354,6 +368,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     @UiThread
     public void showErrorAnimation(){
         if (pinDotRecycler != null){
+            succesHighlight = false;
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
             final TransitionDrawable transition = (TransitionDrawable) getContext().getResources().getDrawable(R.drawable.pincodelock_container_dot_hightlight_error);
             ((IndicatorDotView) pinDotRecycler.getParent()).setBackgroundDrawable(transition);
@@ -437,6 +452,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
     private static final String STATE_FREEZE_DURATION = "state_freeze_duration";
     private static final String STATE_FREEZE_COUNT = "state_freeze_count";
     private static final String STATE_FREEZE_MSG = "state_freeze_msg";
+    private static final String STATE_IS_SUCCESS_HIGHLIGHTED = "state_success_highlight";
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
@@ -455,6 +471,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
             freezeDuration = bundle.getLong(STATE_FREEZE_DURATION);
             setFreezeMsg(bundle.getString(STATE_FREEZE_MSG));
             pin = bundle.getStringArray(STATE_PIN);
+            succesHighlight = bundle.getBoolean(STATE_IS_SUCCESS_HIGHLIGHTED);
             if (pin != null)
                 setPin(pin[0]);
         }else{
@@ -479,6 +496,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
         bundle.putLong(STATE_FREEZE_DURATION, freezeDuration);
         bundle.putString(STATE_FREEZE_MSG, freezeMsg);
         bundle.putStringArray(STATE_PIN, pin);
+        bundle.putBoolean(STATE_IS_SUCCESS_HIGHLIGHTED, succesHighlight);
         return bundle;
     }
 

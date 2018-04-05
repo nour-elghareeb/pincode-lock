@@ -3,6 +3,7 @@ package ne.pincodelock;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -45,6 +46,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
     private int indicatorsViewId;
     private TypedArray attrArray;
     private boolean isRestored = false;
+    private int extraPinWidth;
 
     public PinLockView(Context context) {
         super(context);
@@ -74,7 +76,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         zIndexView = findViewById(R.id.zIndexView);
         extraPinLayout = findViewById(R.id.extraPinLayout);
         extraPinView = findViewById(R.id.extraPinView);
-        extraPinLayout.setOnClickListener(new OnClickListener() {
+        extraPinView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onExtraPinClick();
@@ -102,8 +104,22 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         super.onAttachedToWindow();
         detectListener();
         detectIndicatorView();
-        if (!isRestored)
+        if (!isRestored) {
             applyAttrs();
+
+        }
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                extraPinLayout.getLayoutParams().height = pinLockRecycler.getMeasuredHeight() / 4;
+                int pad = getResources().getDimensionPixelSize(R.dimen.pincodelock_pin_padding);
+                extraPinView.setPadding(pad, pad, pad, pad);
+                extraPinView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.pincodelock_pin_textsize) + pad*2;
+                extraPinView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.pincodelock_pin_textsize) + pad*2;
+
+            }
+        }, 100);
     }
 
     /**
@@ -341,7 +357,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
     @Override
     @UiThread
     public void updateExtraPinLayout(final boolean setVisible, final int resourceId, final int colorId) {
-
+        Drawable drawable = null;
         if (animationInProgress) {
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
@@ -353,7 +369,10 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         }
         animationInProgress = true;
 
-        if (resourceId != 0) this.extraResourceId = resourceId;
+        if (resourceId != 0) {
+            this.extraResourceId = resourceId;
+            drawable = getResources().getDrawable(resourceId);
+        }
         if (colorId != 0) this.extraTintId = colorId;
         int currentVisibility = extraPinLayout.getVisibility();
         Animation animation = null;
@@ -362,17 +381,23 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
         }else if (!setVisible && currentVisibility == VISIBLE){
             animation = AnimationUtils.loadAnimation(getContext(), R.anim.exit_to_left);
         }
+
+
+
         if (animation == null){
-            if(resourceId != 0) extraPinView.setImageResource(resourceId);
+            if(resourceId != 0){
+                extraPinView.setImageDrawable(drawable);
+            }
             if(colorId != 0) extraPinView.setColorFilter(getContext().getResources().getColor(colorId), PorterDuff.Mode.SRC_IN);
             animationInProgress = false;
             return;
         }
+        final Drawable finalDrawable = drawable;
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 if(setVisible){
-                    if(resourceId != 0) extraPinView.setImageResource(resourceId);
+                    if(resourceId != 0) extraPinView.setImageDrawable(finalDrawable);
                     if(colorId != 0) extraPinView.setColorFilter(getContext().getResources()
                             .getColor(colorId), PorterDuff.Mode.SRC_IN);
                     extraPinLayout.setVisibility(VISIBLE);
@@ -382,7 +407,7 @@ public class PinLockView extends ConstraintLayout implements PinLockInternalList
             @Override
             public void onAnimationEnd(Animation animation) {
                 if(!setVisible){
-                    if(resourceId != 0) extraPinView.setImageResource(resourceId);
+                    if(resourceId != 0) extraPinView.setImageDrawable(finalDrawable);
                     if(colorId != 0) extraPinView.setColorFilter(getContext().getResources()
                             .getColor(colorId), PorterDuff.Mode.SRC_IN);
                     extraPinLayout.setVisibility(GONE);

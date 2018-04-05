@@ -18,7 +18,6 @@
         android:visibility="gone"
         />
     <ne.pincodelock.DotRecyclerView
-
         android:id="@+id/dotRecycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 class PinRowViewHolder extends RecyclerView.ViewHolder {
     // left textview (1, 7, 9)
-    private TextView left;
+    protected TextView left;
     // center textview (2, 5, 8)
     TextView center;
     // right text view (3, 6, 9)

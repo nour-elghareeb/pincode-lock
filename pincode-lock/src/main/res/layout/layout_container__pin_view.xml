@@ -6,11 +6,11 @@
     <ne.pincodelock.PinLockRecycler
         android:id="@+id/pinLockRecycler"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/pincodeLock_pin_background_enabled"
 
         />
@@ -29,25 +29,28 @@
         />
     <LinearLayout
         android:id="@+id/extraPinLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/pincodelock_pinRow_marginVertical"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@id/pinLockRecycler"
         app:layout_constraintStart_toStartOf="@id/pinLockRecycler"
-        android:padding="@dimen/pincodelock_pin_padding"
+
+        android:layout_marginLeft="@dimen/pincodelock_pinRow_marginHorizontal"
+        android:layout_marginStart="@dimen/pincodelock_pinRow_marginHorizontal"
+
         android:clickable="true"
         android:focusable="true"
-        android:minWidth="@dimen/pincodelock_pinRow_minHeight"
-        android:minHeight="@dimen/pincodelock_pinRow_minHeight"
-        android:background="@drawable/pincodelock_ripple_effect"
+
+
         app:layout_constraintDimensionRatio="1:1"
         android:visibility="visible"
-
         >
 
         <ImageView
+            android:background="@drawable/pincodelock_ripple_effect"
             android:id="@+id/extraPinView"
+            android:layout_gravity="center"
             android:layout_width="@dimen/pincodelock_pin_textsize"
             android:layout_height="@dimen/pincodelock_pin_textsize"
             android:contentDescription="@string/customizable_extra_button"/>

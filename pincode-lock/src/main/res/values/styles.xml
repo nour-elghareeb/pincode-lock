@@ -26,7 +26,11 @@
     <style name="pinRowStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/pincodelock_pinRow_marginVertical</item>
-        <item name="android:layout_marginBottom">@dimen/pincodelock_pinRow_marginVertical</item>
+        <item name="android:minHeight">@dimen/pincodelock_pinRow_minHeight</item>
+        <item name="android:maxHeight">@dimen/pincodelock_pinRow_maxHeight</item>
+        <item name="android:layout_marginLeft">@dimen/pincodelock_pinRow_marginHorizontal</item>
+        <item name="android:layout_marginRight">@dimen/pincodelock_pinRow_marginHorizontal</item>
+        <!--<item name="android:layout_marginTop">@dimen/pincodelock_pinRow_marginVertical</item>-->
+        <!--<item name="android:layout_marginBottom">@dimen/pincodelock_pinRow_marginVertical</item>-->
     </style>
 </resources>

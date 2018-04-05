@@ -92,6 +92,12 @@ class PinAdapter extends RecyclerView.Adapter implements PinAdapterInterface {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate the view based on the view type
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        try {
+            view.getLayoutParams().height = parent.
+                    findViewWithTag(PinLockRecycler.class.getSimpleName()).getMeasuredHeight() / 4;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // if the viewtype was aint attemptNumber generic row
         if (viewType == R.layout.layout_viewholder__pin_row)
             return new PinRowViewHolder(view, this);

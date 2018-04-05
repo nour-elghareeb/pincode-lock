@@ -24,9 +24,10 @@ class PinLastRowViewHolder extends PinRowViewHolder {
         right = itemView.findViewById(R.id.right);
         rightLayout = itemView.findViewById(R.id.rightLayout);
 
-        int padding = rightLayout.getPaddingTop() + 10;
+        int padding = (int) (rightLayout.getPaddingTop() *1.3);
         rightLayout.setPadding(padding, padding, padding, padding);
         right.setColorFilter(ContextCompat.getColor(callback.getContext(), R.color.pincodelock_text_color), PorterDuff.Mode.SRC_IN);
+
 
     }
     // Override the bind method to offer different functionality for the pincodelock_backspace_icon..
