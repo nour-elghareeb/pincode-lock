@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- message shown when the layout is frozen text size -->
     <dimen name="pincodelock_freeze_msg_textsize">15sp</dimen>
+    <!-- pin layout text size -->
     <dimen name="pincodelock_pin_textsize">25sp</dimen>
+    <!-- pin layout row minimum height -->
     <dimen name="pincodelock_pinRow_minHeight">60dp</dimen>
+    <!-- pin layout row maximum height -->
     <dimen name="pincodelock_pinRow_maxHeight">80dp</dimen>
+    <!-- pin layout row horizontal margin -->
     <dimen name="pincodelock_pinRow_marginHorizontal">25dp</dimen>
-    <dimen name="pincodelock_pin_padding">15dp</dimen>
+    <!-- pin layout row vertical margin -->
     <dimen name="pincodelock_pinRow_marginVertical">10dp</dimen>
+    <!-- each pin padding (affects ripple) minimum height -->
+    <dimen name="pincodelock_pin_padding">15dp</dimen>
+    <!-- dot indicator container radius -->
+    <dimen name="pincodelock_dotContainer_border_radius">8dp</dimen>
+    <!-- dot icon size -->
+    <dimen name="pincodelock_dot_icon_size">20dp</dimen>
 </resources>
