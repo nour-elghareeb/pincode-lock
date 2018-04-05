@@ -471,7 +471,7 @@ class PinLockRecycler extends RecyclerView implements PinLockListener {
             freezeDuration = bundle.getLong(STATE_FREEZE_DURATION);
             setFreezeMsg(bundle.getString(STATE_FREEZE_MSG));
             pin = bundle.getStringArray(STATE_PIN);
-            succesHighlight = bundle.getBoolean(STATE_IS_SUCCESS_HIGHLIGHTED);
+            if (bundle.getBoolean(STATE_IS_SUCCESS_HIGHLIGHTED)) showSuccessAnimation();
             if (pin != null)
                 setPin(pin[0]);
         }else{
