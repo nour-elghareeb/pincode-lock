@@ -19,7 +19,11 @@ Provides a customizable pin code lock screen (PIN input only) for android apps
  
  ![Library screen view](https://github.com/nour-elghareeb/pincode-lock/blob/master/library_screen.gif?raw=true)
 
-
+## Update V0.1.15
+  1. PIN row height is now chaning dynamically to fill the screen size / 4
+  2. It's probably better now to always put the PinLockView in a ScrollView layout to be able to fix
+     height issue on landscape orientation 
+  
 ## Update V0.1.134
   1. Added onSavedInstance and onRestoreInstance feature.
   2. IndicatorDots view is now detectable through findViewByTag() without having the need to 
@@ -50,7 +54,7 @@ dependencies {
 	
 	//recyclerview dependency
 	implementation "com.android.support:recyclerview-v7:26.1.0"
-	compile 'com.ne:pincode-lock:0.1.134'
+	compile 'com.ne:pincode-lock:0.1.15'
 }
 ```
 ## Usage
@@ -271,8 +275,8 @@ To customize library copy these values to its appropriate resources files and up
 ```
 
 ## Known Bugs
-* maintaining/restoring view instance when activity is destroyed **(fixed in v0.1.133)**
-* Library not optimized for landscape orientation.
+* maintaining/restoring view instance when activity is destroyed **(Fixed in v0.1.133)**
+* Library not optimized for landscape orientation. **(Fixed in V.0.1.15)**
 
 ## Support 
 For any bugs or suggestions regarding the library, feel free to open an issue. 
